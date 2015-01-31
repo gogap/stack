@@ -133,6 +133,19 @@ func CallersMulti(skip int) *Multi {
 	return m
 }
 
+func CallersDeepth(skip, deepth int) *Multi {
+	m := new(Multi)
+	var s Stack
+	for i := 0; i < deepth; i++ {
+		c := Caller(i + 2)
+		if c.File != "" {
+			s = append(s, c)
+		}
+	}
+	m.Add(s)
+	return m
+}
+
 func writeStack(b *bytes.Buffer, s Stack) {
 	var width int
 	for _, f := range s {
